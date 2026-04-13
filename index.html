@@ -1,0 +1,1820 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="main-html">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>الخطوط الجوية الليبية - تجربة سفر عالمية</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --burgundy: #8A1538;
+      --burgundy-hover: #6d112c;
+      --pearl: #FAF7F5;
+      --smoke: #f5f0f0;
+      --text-main: #241a1c;
+      --bg-primary: #FAF7F5;
+      --bg-orb1: rgba(138, 21, 56, 0.06);
+      --bg-orb2: rgba(220, 180, 170, 0.15);
+      --bg-orb3: rgba(180, 140, 130, 0.10);
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-main);
+      overflow-x: hidden;
+      transition: all 0.5s ease;
+      position: relative;
+    }
+
+    /* Animated Mesh Background Orbs and Pattern */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(rgba(36, 26, 28, 0.05) 1px, transparent 1px);
+      background-size: 30px 30px;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .bg-orbs-container {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      animation: floatOrb 18s ease-in-out infinite alternate;
+      opacity: 0.6;
+    }
+
+    .orb-1 {
+      width: 600px;
+      height: 600px;
+      background: rgba(138, 21, 56, 0.08);
+      top: -200px;
+      right: -200px;
+      animation-duration: 25s;
+    }
+
+    .orb-2 {
+      width: 500px;
+      height: 500px;
+      background: rgba(210, 160, 150, 0.15);
+      bottom: 10%;
+      left: -150px;
+      animation-duration: 30s;
+      animation-delay: -5s;
+    }
+
+    .orb-3 {
+      width: 400px;
+      height: 400px;
+      background: rgba(138, 21, 56, 0.05);
+      top: 40%;
+      right: 20%;
+      animation-duration: 22s;
+      animation-delay: -12s;
+    }
+
+    @keyframes floatOrb {
+      0%   { transform: translate(0, 0) scale(1); }
+      33%  { transform: translate(60px, -80px) scale(1.1); }
+      66%  { transform: translate(-40px, 60px) scale(0.9); }
+      100% { transform: translate(30px, -30px) scale(1.05); }
+    }
+
+    /* Content must sit above orbs */
+    body > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    [lang="ar"] {
+      /* Reverting to system default Arabic font */
+    }
+
+    /* --- Global Button Styling --- */
+    .btn-fly {
+      background: var(--burgundy);
+      color: white;
+      border-radius: 9999px;
+      padding: 14px 40px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 10px 25px rgba(138, 21, 56, 0.2);
+      border: 2px solid transparent;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn-fly:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 20px 45px rgba(138, 21, 56, 0.35);
+      background: var(--burgundy-hover);
+    }
+
+    .btn-fly.secondary {
+      background: transparent;
+      border: 2px solid white;
+      color: white;
+    }
+
+    /* --- Smart Navbar --- */
+    #navbar {
+      transition: transform 0.4s ease, background 0.3s ease, padding 0.3s ease;
+    }
+
+    #navbar.nav-hidden {
+      transform: translateY(-100%);
+    }
+
+    .nav-link {
+      font-size: 15px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--text-main);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--burgundy);
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    [lang="ar"] nav {
+      justify-content: flex-start !important;
+      padding-right: 20px;
+      gap: 12px !important;
+      flex-wrap: wrap;
+    }
+
+    [lang="ar"] .nav-link {
+      font-size: 16px !important;
+      font-weight: 800 !important;
+      letter-spacing: 0;
+    }
+
+    /* English Navigation Specifics */
+    [dir="ltr"] .nav-link {
+      font-size: 11.5px !important;
+      letter-spacing: 0.05em;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    [dir="ltr"] nav {
+      justify-content: flex-start !important;
+      padding-left: 30px;
+      gap: 14px !important;
+    }
+
+    /* --- Enhanced Dropdown System --- */
+    .nav-item {
+      position: relative;
+      display: flex;
+      align-items: center;
+      height: 100%;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      right: 0; /* Default for RTL */
+      background: white;
+      min-width: 220px;
+      padding: 15px 0;
+      border-radius: 12px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+      z-index: 100;
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    [lang="ar"] .dropdown-item {
+      /* Default Arabic Font */
+      font-size: 15px !important;
+      text-align: right;
+    }
+
+    [dir="ltr"] .dropdown-menu {
+      right: auto;
+      left: 0;
+    }
+
+    .nav-item:hover .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .dropdown-item {
+      display: block;
+      padding: 12px 25px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-main);
+      transition: all 0.2s ease;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    [dir="ltr"] .dropdown-item {
+      text-align: left;
+    }
+
+    .dropdown-item:hover {
+      background: rgba(138, 21, 56, 0.05);
+      color: var(--burgundy);
+      padding-right: 30px;
+    }
+
+    [dir="ltr"] .dropdown-item:hover {
+      padding-right: 25px;
+      padding-left: 30px;
+    }
+
+    /* Multi-level/Mega Menu Special for Prices */
+    .mega-menu {
+      min-width: 500px;
+      padding: 25px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .mega-column-title {
+      font-size: 12px;
+      font-weight: 900;
+      color: var(--burgundy);
+      letter-spacing: 0.1em;
+      margin-bottom: 15px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      text-transform: uppercase;
+    }
+
+    .sub-item {
+      padding: 8px 0;
+      font-size: 13px;
+      color: #666;
+      display: block;
+      transition: 0.2s;
+    }
+
+    .sub-item:hover {
+      color: var(--burgundy);
+      transform: translateX(-5px);
+    }
+
+    [dir="ltr"] .sub-item:hover {
+      transform: translateX(5px);
+    }
+
+    /* --- Ticket System --- */
+    .ticket-wrapper {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1.5rem;
+      align-items: end;
+      padding: 30px;
+      background: #f0f0f0;
+      border-radius: 0 0 32px 32px;
+    }
+
+    .box-manage, .box-status {
+      grid-column: span 2;
+    }
+
+    /* Trip Type Selector Styles */
+    .trip-type-container {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .custom-radio {
+      width: 18px;
+      height: 18px;
+      border: 2px solid #ccc;
+      border-radius: 50%;
+      display: inline-block;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .trip-radio input:checked + .custom-radio {
+      border-color: var(--burgundy);
+    }
+
+    .trip-radio input:checked + .custom-radio::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 10px;
+      height: 10px;
+      background: var(--burgundy);
+      border-radius: 50%;
+      animation: radio-scale 0.2s ease-out;
+    }
+
+    @keyframes radio-scale {
+      from { transform: translate(-50%, -50%) scale(0); }
+      to { transform: translate(-50%, -50%) scale(1); }
+    }
+
+    .trip-type-label {
+      color: var(--text-main);
+      opacity: 0.7;
+      transition: all 0.3s;
+    }
+
+    .trip-radio input:checked ~ .trip-type-label {
+      opacity: 1;
+      color: var(--burgundy);
+    }
+
+    /* Split Date Box Logic */
+    #date-box-wrapper {
+      position: relative;
+      transition: all 0.3s ease;
+      min-width: 250px;
+    }
+
+    #date-box-wrapper.split {
+      grid-column: span 1; /* Keep it compact */
+    }
+
+    /* Custom Mauve Flatpickr Theme */
+    .flatpickr-calendar {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+      border: none;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .flatpickr-day.selected, .flatpickr-day.startRange, .flatpickr-day.endRange,
+    .flatpickr-day.selected.inRange, .flatpickr-day.startRange.inRange, .flatpickr-day.endRange.inRange,
+    .flatpickr-day.selected:focus, .flatpickr-day.startRange:focus, .flatpickr-day.endRange:focus,
+    .flatpickr-day.selected:hover, .flatpickr-day.startRange:hover, .flatpickr-day.endRange:hover,
+    .flatpickr-day.selected.prevMonthDay, .flatpickr-day.startRange.prevMonthDay, .flatpickr-day.endRange.prevMonthDay,
+    .flatpickr-day.selected.nextMonthDay, .flatpickr-day.startRange.nextMonthDay, .flatpickr-day.endRange.nextMonthDay {
+      background: var(--burgundy) !important;
+      border-color: var(--burgundy) !important;
+      color: white !important;
+    }
+
+    .flatpickr-day.inRange {
+      background: #E1BEE7 !important; /* Soft Mauve */
+      border-color: #E1BEE7 !important;
+      box-shadow: -5px 0 0 #E1BEE7, 5px 0 0 #E1BEE7 !important;
+    }
+
+    .flatpickr-months .flatpickr-month {
+      color: var(--text-main); fill: var(--text-main);
+    }
+    .flatpickr-current-month .flatpickr-monthDropdown-months {
+        font-weight: 800;
+    }
+
+    /* Utility classes */
+    .hidden { display: none !important; }
+    
+    @media (max-width: 1024px) {
+      .ticket-wrapper { grid-template-columns: 1fr 1fr; }
+      .trip-type-container { order: -1; margin-bottom: 2rem; }
+    }
+    @media (max-width: 640px) {
+      .ticket-wrapper { grid-template-columns: 1fr; }
+    }
+
+    .ticket-box {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 28px;
+      padding: 24px 35px;
+      position: relative;
+      transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+    }
+
+    .ticket-box::before,
+    .ticket-box::after {
+      content: '';
+      position: absolute;
+      width: 32px;
+      height: 32px;
+      background: #f0f0f0;
+      border-radius: 50%;
+      top: 50%;
+      transform: translateY(-50%);
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+      z-index: 5;
+    }
+
+    .ticket-box::before {
+      left: -16px;
+    }
+
+    .ticket-box::after {
+      right: -16px;
+    }
+
+    .ticket-box:hover {
+      transform: translateY(-12px);
+      background: rgba(255, 255, 255, 0.98);
+    }
+
+    .ticket-label {
+      font-size: 11px;
+      font-weight: 900;
+      color: var(--burgundy);
+      letter-spacing: 0.2em;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .ticket-input {
+      width: 100%;
+      font-size: 19px;
+      font-weight: 800;
+      background: transparent;
+      border: none;
+      outline: none;
+    }
+
+    /* --- Hero --- */
+    .hero-section {
+      height: 75vh;
+      position: relative;
+      background: #1a1a1a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.6)), url('https://libyanairlines.aero/wp-content/uploads/2022/01/airlines-hero-en.jpg.webp');
+      background-size: cover;
+      background-position: center right;
+      transition: all 1s ease-in-out;
+      z-index: 1;
+    }
+
+    [dir="ltr"] .hero-bg {
+      background-position: center left;
+    }
+
+    .hero-title-container {
+      position: relative;
+      z-index: 10;
+      max-width: 1200px;
+      width: 100%;
+    }
+
+    [dir="rtl"] .hero-title-container {
+      text-align: right;
+    }
+
+    [dir="ltr"] .hero-title-container {
+      text-align: left;
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      white-space: nowrap;
+    }
+
+    .qa-booking-container {
+      position: relative;
+      margin: -140px auto 30px auto;
+      width: 92%;
+      max-width: 1300px;
+      z-index: 500;
+      display: flex;
+      justify-content: center;
+    }
+
+    .flying-wrapper {
+      animation: float 4s ease-in-out infinite;
+      width: 100%;
+    }
+
+    .qa-booking-bar {
+      background: white;
+      border-radius: 32px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.15);
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .qa-tab-header {
+      display: flex;
+      background: #fafafa;
+    }
+
+    .qa-tab {
+      padding: 22px 35px;
+      font-weight: 800;
+      font-size: 13px;
+      color: #888;
+      cursor: pointer;
+      border-bottom: 4px solid transparent;
+      transition: 0.3s;
+    }
+
+    .qa-tab.active {
+      color: var(--burgundy);
+      border-bottom-color: var(--burgundy);
+      background: white;
+    }
+
+    /* --- Slider Styling --- */
+    .slider-viewport {
+      overflow: hidden;
+      width: 100%;
+      padding: 20px 0;
+    }
+
+    .slider-container {
+      display: flex;
+      gap: 20px;
+      width: max-content;
+      transform: translateX(0);
+    }
+
+    .dest-card-premium {
+      width: 280px; /* Default for mobile/tablet */
+      height: 420px;
+      border-radius: 32px;
+      overflow: hidden;
+      position: relative;
+      transition: 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    @media (min-width: 1024px) {
+      .dest-card-premium {
+        width: calc(25% - 15px); /* Exactly 4 cards with 20px gaps */
+      }
+    }
+
+    .dest-card-premium img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 1s ease;
+    }
+
+    .price-tag {
+      position: absolute;
+      top: 30px;
+      left: 30px;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 8px 20px;
+      border-radius: 99px;
+      font-weight: 900;
+      font-size: 14px;
+      color: var(--burgundy);
+      z-index: 10;
+    }
+
+    [data-lucide] {
+      stroke-width: 2.5px;
+    }
+
+    .slider-arrow-btn {
+      position: absolute;
+      top: 50%;
+      width: 65px;
+      height: 65px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      z-index: 100;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .slider-arrow-btn:hover {
+      background: var(--burgundy);
+      color: white;
+      transform: scale(1.1);
+    }
+
+    .arrow-l {
+      left: 40px;
+    }
+
+    .arrow-r {
+      right: 40px;
+    }
+
+    /* --- Strong Bento Grid --- */
+    .bento-grid {
+      display: grid;
+      gap: 24px;
+      grid-template-columns: repeat(1, 1fr);
+    }
+
+    @media (min-width: 1024px) {
+      .bento-grid {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(2, 300px);
+      }
+    }
+
+    .bento-card {
+      position: relative;
+      border-radius: 40px;
+      overflow: hidden;
+      transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+
+    .bento-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 30px 60px rgba(138, 21, 56, 0.25);
+    }
+
+    .bento-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 1.2s ease;
+    }
+
+    .bento-card:hover img {
+      transform: scale(1.1);
+    }
+
+    .bento-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.2) 50%, transparent 100%);
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      color: white;
+    }
+
+    .bento-hero-overlay {
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.3) 60%, transparent 100%);
+    }
+
+    .glass-badge {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      padding: 8px 16px;
+      border-radius: 99px;
+      font-size: 12px;
+      font-weight: 900;
+      width: fit-content;
+      margin-bottom: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    /* Reveal Styles */
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: 1s ease-out;
+    }
+
+    [data-reveal].active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Mobile Fixes */
+    @media (max-width: 768px) {
+      .hero-bg {
+        background-position: 70% center !important;
+      }
+
+      .hero-title {
+        white-space: normal;
+        font-size: 2.8rem;
+        text-align: center !important;
+      }
+
+      .hero-title-container {
+        text-align: center !important;
+      }
+
+      .ticket-wrapper {
+        grid-template-columns: 1fr;
+      }
+
+      .dest-card-premium {
+        width: 85vw;
+        height: 420px;
+      }
+
+      .slider-arrow-btn {
+        display: none;
+      }
+
+      .offer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body class="antialiased">
+  
+  <!-- Animated Background -->
+  <div class="bg-orbs-container">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Header / Navbar -->
+  <header id="navbar" class="fixed top-0 w-full z-[1000] py-4 bg-white/95 backdrop-blur-md border-b border-slate-100">
+    <div class="container mx-auto px-6 flex justify-between items-center">
+      <div class="flex items-center gap-8 shrink-0">
+        <a href="index.html"><img src="https://libyanairlines.aero/wp-content/uploads/2020/07/airlines-logo.svg"
+            alt="Libyan Airlines" class="h-10"></a>
+      </div>
+
+      <nav class="flex gap-2.5 items-center flex-1 justify-center mx-2">
+        <!-- 1. Home -->
+        <div class="nav-item">
+          <a href="#" class="nav-link text-[13px] font-black nav-home whitespace-nowrap"><span class="nav-home">الرئيسية</span></a>
+        </div>
+
+        <!-- 2. Libyan Airlines (Dropdown) -->
+        <div class="nav-item">
+          <a href="#" class="nav-link text-[13px] font-black nav-airlines flex items-center gap-1 whitespace-nowrap"><span class="nav-airlines">الخطوط الليبية</span> <i data-lucide="chevron-down" class="w-3 h-3 opacity-50"></i></a>
+          <div class="dropdown-menu">
+            <a href="#" class="dropdown-item nav-about">عن الشركة</a>
+            <a href="#" class="dropdown-item nav-news-link">الأخبار</a>
+            <a href="#" class="dropdown-item nav-libya">عن ليبيا</a>
+          </div>
+        </div>
+
+        <!-- 3. OFFICES (Dropdown) -->
+        <div class="nav-item">
+          <a href="#" class="nav-link text-[13px] font-black nav-offices flex items-center gap-1 whitespace-nowrap"><span class="nav-offices">المكاتب</span> <i data-lucide="chevron-down" class="w-3 h-3 opacity-50"></i></a>
+          <div class="dropdown-menu">
+            <a href="#" class="dropdown-item nav-off-domestic">المكاتب المحلية</a>
+            <a href="#" class="dropdown-item nav-off-world">المكاتب العالمية</a>
+          </div>
+        </div>
+
+
+
+        <!-- 5. Flight Schedule (Dropdown) -->
+        <div class="nav-item">
+          <a href="#" class="nav-link text-[13px] font-black nav-schedule flex items-center gap-1 whitespace-nowrap"><span class="nav-schedule">جدول الرحلات</span> <i data-lucide="chevron-down" class="w-3 h-3 opacity-50"></i></a>
+          <div class="dropdown-menu">
+            <a href="#" class="dropdown-item nav-sch-domestic">رحلات محلية</a>
+            <a href="#" class="dropdown-item nav-sch-intl">رحلات دولية</a>
+          </div>
+        </div>
+
+        <!-- 6. Prices (Mega Dropdown) -->
+        <div class="nav-item">
+          <a href="#" class="nav-link text-[13px] font-black nav-prices flex items-center gap-1 whitespace-nowrap"><span class="nav-prices">الأسعار</span> <i data-lucide="chevron-down" class="w-3 h-3 opacity-50"></i></a>
+          <div class="dropdown-menu mega-menu">
+            <div>
+              <div class="mega-column-title nav-p-domestic">محلي</div>
+              <div class="flex flex-col">
+                <a href="#" class="sub-item nav-p-mitiga">من معيتيقة</a>
+                <a href="#" class="sub-item nav-p-benghazi">من بنغازي</a>
+                <a href="#" class="sub-item nav-p-sabha">من سبها</a>
+                <a href="#" class="sub-item nav-p-ghat">من غات</a>
+              </div>
+            </div>
+            <div>
+              <div class="mega-column-title nav-p-intl">دولي</div>
+              <div class="flex flex-col">
+                <a href="#" class="sub-item nav-p-i-mitiga">من معيتيقة</a>
+                <a href="#" class="sub-item nav-p-i-benghazi">من بنغازي</a>
+                <a href="#" class="sub-item nav-p-i-misrata">من مصراتة</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7. Contact Us -->
+        <div class="nav-item">
+          <a href="#" class="nav-link text-[13px] font-black nav-contact whitespace-nowrap"><span class="nav-contact">اتصل بنا</span></a>
+        </div>
+
+        <!-- 8. Cargo Operation -->
+        <div class="nav-item">
+          <a href="#" class="nav-link text-[13px] font-black nav-cargo whitespace-nowrap"><span class="nav-cargo">عمليات الشحن</span></a>
+        </div>
+
+        <!-- 9. Internal Agencies -->
+        <div class="nav-item">
+          <a href="#" class="nav-link text-[13px] font-black nav-agency-in whitespace-nowrap"><span class="nav-agency-in">وكالات داخلية</span></a>
+        </div>
+
+        <!-- 10. External Agencies -->
+        <div class="nav-item">
+          <a href="#" class="nav-link text-[13px] font-black nav-agency-ex whitespace-nowrap"><span class="nav-agency-ex">وكالات خارجية</span></a>
+        </div>
+
+
+      </nav>
+
+      <div class="flex items-center gap-6 shrink-0">
+        <button onclick="toggleLanguage()" class="flex items-center gap-2 text-[12px] font-black group">
+          <i data-lucide="globe"
+            class="w-4 h-4 text-[--burgundy] group-hover:rotate-180 transition-transform duration-700"></i>
+          <span id="lang-text" class="min-w-[20px]">EN</span>
+        </button>
+        <button class="btn-login btn-fly py-2.5 px-8 text-[13px] nav-login">تسجيل الدخول</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero (UNTOUCHED) -->
+  <section class="hero-section">
+    <div class="hero-bg"></div>
+    <div class="container mx-auto px-6 hero-title-container pb-20" data-reveal>
+      <h1 class="hero-title font-black text-white leading-tight mb-8 drop-shadow-2xl" id="hero-main-title">تجاوز
+        التوقعات</h1>
+      <p class="hero-p text-xl md:text-2xl font-light text-white/90 max-w-2xl mb-12" id="hero-sub-title">انطلق في رحلة
+        لا تُنسى مع الخطوط الجوية الليبية، حيث تلتقي الأصالة الليبية بمعايير الفخامة العالمية.</p>
+      <button class="hero-btn btn-fly secondary py-5 px-14 text-lg" id="hero-cta">استكشف العالم الآن</button>
+    </div>
+  </section>
+
+  <!-- Booking Bar (UNTOUCHED) -->
+  <div class="qa-booking-container" data-reveal>
+    <div class="flying-wrapper">
+      <div class="qa-booking-bar">
+        <div class="qa-tab-header">
+          <div class="qa-tab active tab-book">حجز رحلة</div>
+          <div class="qa-tab tab-manage">إدارة الحجز</div>
+          <div class="qa-tab tab-status">حالة الرحلة</div>
+        </div>
+        <div class="ticket-wrapper" id="booking-wrapper">
+          <!-- Trip Type Selector with Radio Dots -->
+          <div class="trip-type-container flex gap-8 mb-6 px-4 col-span-full border-b border-black/5 pb-4">
+            <label class="trip-radio flex items-center gap-3 cursor-pointer group">
+              <input type="radio" name="trip-type" checked onclick="setTripType('round')" class="hidden">
+              <span class="custom-radio"></span>
+              <span class="text-sm font-bold trip-type-label lbl-round">ذهاب وعودة</span>
+            </label>
+            <label class="trip-radio flex items-center gap-3 cursor-pointer group">
+              <input type="radio" name="trip-type" onclick="setTripType('oneway')" class="hidden">
+              <span class="custom-radio"></span>
+              <span class="text-sm font-bold trip-type-label lbl-oneway">ذهاب فقط</span>
+            </label>
+            <label class="trip-radio flex items-center gap-3 cursor-pointer group">
+              <input type="radio" name="trip-type" onclick="setTripType('multi')" class="hidden">
+              <span class="custom-radio"></span>
+              <span class="text-sm font-bold trip-type-label lbl-multi">وجهات متعددة</span>
+            </label>
+          </div>
+
+          <!-- Book a Flight Fields -->
+          <div class="ticket-box box-book"><span class="ticket-label lbl-from">من أين</span><input type="text" value="طرابلس (MJI)" class="ticket-input inp-from"></div>
+          <div class="ticket-box box-book"><span class="ticket-label lbl-to">إلى أين</span><input type="text" placeholder="الوجهة" class="ticket-input inp-to"></div>
+          
+          <!-- Shared Date Box (Split for Round Trip) -->
+          <div class="ticket-box box-book cursor-pointer split" id="date-box-wrapper">
+            <div class="flex h-full w-full">
+              <div class="flex-1 flex flex-col justify-center">
+                <span class="ticket-label lbl-dep">المغادرة</span>
+                <input type="text" id="date-from" class="ticket-input bg-transparent pointer-events-none" value="12 مايو">
+              </div>
+              <div class="h-6 w-px bg-slate-200 self-center mx-2" id="date-separator"></div>
+              <div class="flex-1 flex flex-col justify-center" id="return-box">
+                <span class="ticket-label lbl-ret">العودة</span>
+                <input type="text" id="date-to" class="ticket-input bg-transparent pointer-events-none" placeholder="تاريخ العودة">
+              </div>
+            </div>
+            <input type="text" id="flatpickr-input" class="absolute inset-0 opacity-0 cursor-pointer">
+          </div>
+
+          <div class="ticket-box box-book"><span class="ticket-label lbl-pass">المسافرون</span><input type="text" value="1 بالغ، سياحية" class="ticket-input inp-pass"></div>
+          
+          <!-- Manage Booking Fields (Hidden) -->
+          <div class="ticket-box box-manage hidden"><span class="ticket-label lbl-ref">رقم الحجز</span><input type="text" placeholder="مثلاً: ABC123" class="ticket-input inp-ref"></div>
+          <div class="ticket-box box-manage hidden"><span class="ticket-label lbl-last-name">اسم العائلة</span><input type="text" placeholder="الكنية" class="ticket-input inp-last"></div>
+          
+          <!-- Flight Status Fields (Hidden) -->
+          <div class="ticket-box box-status hidden"><span class="ticket-label lbl-flight-no">رقم الرحلة</span><input type="text" placeholder="مثلاً: LN123" class="ticket-input inp-flight"></div>
+          <div class="ticket-box box-status hidden"><span class="ticket-label lbl-date">موعد السفر</span><input type="text" value="اليوم" class="ticket-input inp-date-status"></div>
+
+          <button class="btn-fly btn-search h-full py-6 rounded-[24px] text-xl flex items-center justify-center">بحث</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3: Popular Destinations (Slider Version) -->
+  <section class="py-32 bg-white relative overflow-hidden">
+    <div class="container mx-auto px-6 mb-16">
+      <div class="flex justify-between items-end" data-reveal>
+        <div>
+          <span class="text-[--burgundy] font-black uppercase tracking-[0.4em] text-sm block mb-4 pop-tag">أشهر
+            الوجهات</span>
+          <h2 class="text-5xl font-black text-slate-900 pop-title">وجهات مميزة في انتظارك</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mx-auto px-6 relative group">
+      <!-- Navigation Arrows (Hidden by default, appear on hover) -->
+      <!-- In RTL: Left arrow moves to next(+1), Right moves to previous(-1). In LTR: Viz versa. -->
+      <button onclick="movePopSlider(-1)" class="absolute left-4 top-1/2 -translate-y-1/2 z-30 transition-all duration-500 opacity-0 group-hover:opacity-100 flex items-center justify-center w-12 h-12 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white hover:bg-[--burgundy] hover:border-[--burgundy] shadow-xl ltr:rotate-0 rtl:rotate-180">
+        <i data-lucide="chevron-left"></i>
+      </button>
+      <button onclick="movePopSlider(1)" class="absolute right-4 top-1/2 -translate-y-1/2 z-30 transition-all duration-500 opacity-0 group-hover:opacity-100 flex items-center justify-center w-12 h-12 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white hover:bg-[--burgundy] hover:border-[--burgundy] shadow-xl ltr:rotate-0 rtl:rotate-180">
+        <i data-lucide="chevron-right"></i>
+      </button>
+
+      <!-- Slider Container -->
+      <div class="overflow-hidden py-10">
+        <div id="pop-slider" class="flex gap-5 transition-transform duration-700 ease-out">
+          <!-- 1. Istanbul -->
+          <div class="dest-card-premium group/card cursor-pointer overflow-hidden flex-shrink-0 relative">
+            <div class="price-tag"><span class="start-txt">ابتداءً من</span> $250</div>
+            <img src="https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?q=80&w=800" class="w-full h-full object-cover transition-transform duration-1000 group-hover/card:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent flex flex-col justify-end p-8">
+              <!-- Text Container that slides UP -->
+              <div class="absolute bottom-10 left-8 right-8 transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover/card:bottom-24">
+                <h3 class="text-3xl font-black text-white mb-1 d1-n">إسطنبول</h3>
+                <div class="flex items-center gap-3">
+                  <p class="text-sm text-white/70 d1-c">تركيا</p>
+                  <span class="w-1.5 h-1.5 rounded-full bg-white/30"></span>
+                  <p class="text-sm text-white/90 font-bold d-date">12 مايو</p>
+                </div>
+                <p class="text-xs text-white/50 mt-2 font-light d1-desc">اكتشف سحر التاريخ والجمال</p>
+              </div>
+              <!-- Button that slides UP from bottom -->
+              <div class="absolute -bottom-16 left-8 right-8 opacity-0 transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover/card:bottom-8 group-hover/card:opacity-100">
+                <button class="w-full btn-fly py-3 text-sm font-black book-now-btn">احجز الآن</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Dubai -->
+          <div class="dest-card-premium group/card cursor-pointer overflow-hidden flex-shrink-0 relative">
+            <div class="price-tag"><span class="start-txt">ابتداءً من</span> $350</div>
+            <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=800" class="w-full h-full object-cover transition-transform duration-1000 group-hover/card:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent flex flex-col justify-end p-8 text-start">
+               <div class="absolute bottom-10 left-8 right-8 transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover/card:bottom-24">
+                <h3 class="text-3xl font-black text-white mb-1 d2-n">دبي</h3>
+                <div class="flex items-center gap-3 text-start">
+                  <p class="text-sm text-white/70 d2-c">الإمارات</p>
+                  <span class="w-1.5 h-1.5 rounded-full bg-white/30"></span>
+                  <p class="text-sm text-white/90 font-bold d-date">18 مايو</p>
+                </div>
+                <p class="text-xs text-white/50 mt-2 font-light d2-desc">عالم من الرفاهية والتسوق</p>
+              </div>
+              <div class="absolute -bottom-16 left-8 right-8 opacity-0 transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover/card:bottom-8 group-hover/card:opacity-100">
+                <button class="w-full btn-fly py-3 text-sm font-black book-now-btn">احجز الآن</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Cairo -->
+          <div class="dest-card-premium group/card cursor-pointer overflow-hidden flex-shrink-0 relative">
+            <div class="price-tag"><span class="start-txt">ابتداءً من</span> $150</div>
+            <img src="https://images.unsplash.com/photo-1572252009286-268acec5ca0a?q=80&w=800" class="w-full h-full object-cover transition-transform duration-1000 group-hover/card:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent flex flex-col justify-end p-8 text-start">
+               <div class="absolute bottom-10 left-8 right-8 transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover/card:bottom-24">
+                <h3 class="text-3xl font-black text-white mb-1 d3-n">القاهرة</h3>
+                <div class="flex items-center gap-3 text-start">
+                  <p class="text-sm text-white/70 d3-c">مصر</p>
+                  <span class="w-1.5 h-1.5 rounded-full bg-white/30"></span>
+                  <p class="text-sm text-white/90 font-bold d-date">10 يونيو</p>
+                </div>
+                <p class="text-xs text-white/50 mt-2 font-light d3-desc">مهد الحضارة والتراث العريق</p>
+              </div>
+              <div class="absolute -bottom-16 left-8 right-8 opacity-0 transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover/card:bottom-8 group-hover/card:opacity-100">
+                <button class="w-full btn-fly py-3 text-sm font-black book-now-btn">احجز الآن</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. London -->
+          <div class="dest-card-premium group/card cursor-pointer overflow-hidden flex-shrink-0 relative">
+            <div class="price-tag"><span class="start-txt">ابتداءً من</span> $450</div>
+            <img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?q=80&w=800" class="w-full h-full object-cover transition-transform duration-1000 group-hover/card:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent flex flex-col justify-end p-8 text-start">
+               <div class="absolute bottom-10 left-8 right-8 transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover/card:bottom-24">
+                <h3 class="text-3xl font-black text-white mb-1 d4-n">لندن</h3>
+                <div class="flex items-center gap-3 text-start">
+                  <p class="text-sm text-white/70 d4-c">المملكة المتحدة</p>
+                  <span class="w-1.5 h-1.5 rounded-full bg-white/30"></span>
+                  <p class="text-sm text-white/90 font-bold d-date">22 مايو</p>
+                </div>
+                <p class="text-xs text-white/50 mt-2 font-light d4-desc">عاصمة الضباب والرقي</p>
+              </div>
+              <div class="absolute -bottom-16 left-8 right-8 opacity-0 transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover/card:bottom-8 group-hover/card:opacity-100">
+                <button class="w-full btn-fly py-3 text-sm font-black book-now-btn">احجز الآن</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. Tunis -->
+          <div class="dest-card-premium group/card cursor-pointer overflow-hidden flex-shrink-0 relative">
+            <div class="price-tag"><span class="start-txt">ابتداءً من</span> $120</div>
+            <img src="https://images.unsplash.com/photo-1589417937410-b9df74cd541e?q=80&w=800" class="w-full h-full object-cover transition-transform duration-1000 group-hover/card:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent flex flex-col justify-end p-8 text-start">
+               <div class="absolute bottom-10 left-8 right-8 transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover/card:bottom-24">
+                <h3 class="text-3xl font-black text-white mb-1 d5-n">تونس</h3>
+                <div class="flex items-center gap-3 text-start">
+                  <p class="text-sm text-white/70 d5-c">تونس</p>
+                  <span class="w-1.5 h-1.5 rounded-full bg-white/30"></span>
+                  <p class="text-sm text-white/90 font-bold d-date">05 مايو</p>
+                </div>
+                <p class="text-xs text-white/50 mt-2 font-light d5-desc">جمال المتوسط وكرم الضيافة</p>
+              </div>
+              <div class="absolute -bottom-16 left-8 right-8 opacity-0 transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover/card:bottom-8 group-hover/card:opacity-100">
+                <button class="w-full btn-fly py-3 text-sm font-black book-now-btn">احجز الآن</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 6. Amman -->
+          <div class="dest-card-premium group/card cursor-pointer overflow-hidden flex-shrink-0 relative">
+            <div class="price-tag"><span class="start-txt">ابتداءً من</span> $180</div>
+            <img src="https://images.unsplash.com/photo-1549144464-904313f89839?q=80&w=800" class="w-full h-full object-cover transition-transform duration-1000 group-hover/card:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent flex flex-col justify-end p-8 text-start">
+               <div class="absolute bottom-10 left-8 right-8 transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover/card:bottom-24">
+                <h3 class="text-3xl font-black text-white mb-1 d6-n">عمان</h3>
+                <div class="flex items-center gap-3 text-start">
+                  <p class="text-sm text-white/70 d6-c">الأردن</p>
+                  <span class="w-1.5 h-1.5 rounded-full bg-white/30"></span>
+                  <p class="text-sm text-white/90 font-bold d-date">14 يونيو</p>
+                </div>
+                <p class="text-xs text-white/50 mt-2 font-light d6-desc">مدينة الأصالة والطبيعة الخلابة</p>
+              </div>
+              <div class="absolute -bottom-16 left-8 right-8 opacity-0 transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover/card:bottom-8 group-hover/card:opacity-100">
+                <button class="w-full btn-fly py-3 text-sm font-black book-now-btn">احجز الآن</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Premium Banner (Business Class) -->
+  <section class="py-32 bg-[#1c1c24] relative overflow-hidden min-h-[500px] flex items-center mt-10">
+    <!-- صورة مميزة لدرجة رجال الأعمال -->
+    <div class="absolute inset-0 z-0">
+      <img src="https://images.unsplash.com/photo-1569154941061-e231b4725ef1?q=80&w=1600" alt="Inside Business Class Cabin" class="w-full h-full object-cover opacity-80"
+        onerror="this.style.display='none'; this.parentNode.style.backgroundColor='#1c1c24';">
+    </div>
+
+    <!-- Dark gradient overlay on the left for text legibility -->
+    <div class="absolute inset-0 z-10 bg-gradient-to-r rtl:bg-gradient-to-l from-black/90 via-black/50 to-transparent"></div>
+
+    <div class="container mx-auto px-6 relative z-20">
+      <div class="max-w-2xl text-start me-auto">
+        <div
+          class="glass-badge mb-6 inline-block border-white/20 text-white !mb-0 font-bold tracking-widest text-sm py-2 px-6 b-badge">
+          درجة رجال الأعمال</div>
+        <h2 class="text-5xl md:text-6xl font-black text-white leading-tight mt-6 mb-6 pt-px b-title">رفاهية لا تضاهى في عنان السماء</h2>
+        <p class="text-xl text-white/80 font-light mb-10 leading-relaxed b-desc">استمتع بتجربة سفر فاخرة صُممت خصيصاً لتلبي تطلعاتك. مقاعد جلدية وثيرة، خصوصية تامة، وأجواء هادئة تضمن لك الراحة طوال الرحلة.</p>
+        <button
+          class="btn-fly secondary py-4 px-12 text-lg hover:bg-white hover:text-black hover:border-white transition-all duration-300 b-btn">ترقية رحلتي</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: Special Offers Slider -->
+  <section class="pb-32 overflow-hidden bg-slate-50 py-32 rounded-t-[100px]">
+    <div class="container mx-auto px-6 mb-16">
+      <div class="flex justify-between items-end" data-reveal>
+        <div>
+          <span class="text-[--burgundy] font-black uppercase tracking-[0.4em] text-sm block mb-4 deals-tag">العروض
+            الحصرية</span>
+          <h2 class="text-5xl font-black text-slate-900 deals-title">اكتشف أفضل صفقات الطيران</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mx-auto px-6 bento-grid">
+      <!-- 1. Students (Hero - 2x2) -->
+      <div class="bento-card lg:col-span-2 lg:row-span-2" data-reveal>
+        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1200" alt="Students">
+        <div class="bento-overlay bento-hero-overlay text-start">
+          <div class="glass-badge os-badge">عرض حصري</div>
+          <i data-lucide="graduation-cap" class="w-16 h-16 mb-6 text-white/40"></i>
+          <h3 class="text-5xl font-black mb-4 os-t leading-tight">عروض الطلاب والمبتعثين</h3>
+          <p class="text-white/80 text-lg mb-8 os-p max-w-md">خصم حتى 25% مع إمكانية حمل قطعة أمتعة إضافية مجاناً لجميع
+            وجهاتنا الدراسية.</p>
+          <button class="btn-fly py-4 px-10 self-start explore-btn">احجز الآن</button>
+        </div>
+      </div>
+
+      <!-- 2. Business (Wide - 2x1) -->
+      <div class="bento-card lg:col-span-2 lg:row-span-1" data-reveal>
+        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1200" alt="Business">
+        <div class="bento-overlay text-start">
+          <div class="flex justify-between items-start">
+            <i data-lucide="gem" class="w-10 h-10 text-white/40"></i>
+            <div class="glass-badge ob-badge">VIP</div>
+          </div>
+          <h3 class="text-3xl font-black ob-t">درجة رجال الأعمال</h3>
+          <p class="text-white/70 text-sm ob-p">ارتقِ بتجربتك مع دخول صالات كبار الزوار وخدماتنا المميزة.</p>
+        </div>
+      </div>
+
+      <!-- 3. Family (Square - 1x1) -->
+      <div class="bento-card lg:col-span-1 lg:row-span-1" data-reveal>
+        <img src="https://images.unsplash.com/photo-1503220317375-aaad61436b1b?q=80&w=1200" alt="Family">
+        <div class="bento-overlay text-start p-8">
+          <i data-lucide="users" class="w-8 h-8 mb-4 text-white/40"></i>
+          <h3 class="text-xl font-black of-t">عروض العائلات</h3>
+          <p class="text-white/70 text-xs of-p">رحلات مريحة لجميع أفراد العائلة بخصومات رائعة.</p>
+        </div>
+      </div>
+
+      <!-- 4. Last Minute (Square - 1x1) -->
+      <div class="bento-card lg:col-span-1 lg:row-span-1" data-reveal>
+        <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1200" alt="Last Minute">
+        <div class="bento-overlay text-start p-8">
+          <i data-lucide="zap" class="w-8 h-8 mb-4 text-white/40"></i>
+          <h3 class="text-xl font-black ol-t">اللحظة الأخيرة</h3>
+          <p class="text-white/70 text-xs ol-p">لم يفت الأوان بعد! أحجز رحلة الغد بأسعار خيالية.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- Section 6: Download App (Redesigned with multiple screens & Real Branding) -->
+  <section class="py-32 relative overflow-hidden bg-slate-950">
+    <!-- خلفية الطائرة الحقيقية للخطوط الليبية والشعار المستتر -->
+    <div class="absolute inset-0 z-0">
+      <img src="images/311483.jpg" class="w-full h-full object-cover opacity-20 mix-blend-overlay">
+      <img src="https://libyanairlines.aero/wp-content/uploads/2020/07/airlines-logo.svg" class="absolute top-1/2 right-1/4 -translate-y-1/2 w-[800px] opacity-[0.02] pointer-events-none">
+      <div class="absolute inset-0 bg-gradient-to-r from-[#1c1c24]/95 via-[#1c1c24]/80 to-[#1c1c24]/30" dir="ltr"></div>
+    </div>
+    
+    <div class="container mx-auto px-6 relative z-10">
+      <div class="flex flex-col lg:flex-row items-center gap-20">
+        <div class="lg:w-1/2 text-start" data-reveal>
+          <div class="glass-badge mb-6 inline-flex border-white/20 text-white font-bold tracking-widest text-sm py-2 px-6 backdrop-blur-md app-tag items-center gap-3">
+            <img src="https://libyanairlines.aero/wp-content/uploads/2020/07/airlines-logo.svg" class="w-6 h-6 brightness-200 grayscale">
+            <span>التطبيق المحمول</span>
+          </div>
+          <h2 class="text-5xl md:text-6xl font-black text-white mb-8 leading-tight drop-shadow-2xl app-title">رحلتك القادمة في جيبك</h2>
+          <p class="text-xl text-white/70 mb-12 font-light leading-relaxed app-p">حمل تطبيق الخطوط الجوية الليبية الآن واستمتع بتجربة حجز سريعة وسهلة، وتابع حالة رحلتك لحظة بلحظة.</p>
+          <div class="flex flex-wrap gap-6 justify-start">
+            <button class="flex items-center gap-4 bg-white/10 hover:bg-white/20 backdrop-blur-lg border border-white/30 text-white px-8 py-4 rounded-2xl hover:scale-105 transition duration-300">
+              <i data-lucide="smartphone" class="w-8 h-8"></i>
+              <div class="text-start">
+                <div class="text-[10px] uppercase font-bold opacity-70">Available on</div>
+                <div class="text-lg font-black tracking-wide">App Store</div>
+              </div>
+            </button>
+            <button class="flex items-center gap-4 bg-[--burgundy] hover:bg-[--burgundy-hover] text-white px-8 py-4 rounded-2xl hover:scale-105 transition duration-300 shadow-[0_10px_30px_rgba(138,21,56,0.4)]">
+              <i data-lucide="play" class="w-8 h-8"></i>
+              <div class="text-start">
+                <div class="text-[10px] uppercase font-bold opacity-80">Get it on</div>
+                <div class="text-lg font-black tracking-wide">Google Play</div>
+              </div>
+            </button>
+          </div>
+        </div>
+        <div class="lg:w-1/2 relative flex justify-center w-full min-h-[500px]" data-reveal>
+          <!-- Glowing effect -->
+          <div class="w-[300px] h-[300px] md:w-[500px] md:h-[500px] bg-[--burgundy] rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 blur-[100px] opacity-40 animate-pulse"></div>
+          <!-- Mockup Images Cascade Fan -->
+          <div class="relative w-full max-w-[450px] flex items-center justify-center mt-10 lg:mt-0">
+            <!-- Left Screen (Login) -->
+            <img src="file:///C:/Users/HP_ProOne_440_User/.gemini/antigravity/brain/52a35f01-f539-4782-bd89-fda8c6618cc1/app_login_mockup_1776056532135.png"
+                 class="absolute w-[200px] md:w-[220px] rounded-[30px] border-[4px] border-[#2a2a35] shadow-2xl -rotate-[15deg] -translate-x-[100px] md:-translate-x-[120px] translate-y-8 opacity-70 hover:z-30 hover:opacity-100 hover:-rotate-6 hover:scale-110 hover:-translate-y-4 transition-all duration-500 cursor-pointer">
+            
+            <!-- Right Screen (Home / Search) -->
+            <img src="file:///C:/Users/HP_ProOne_440_User/.gemini/antigravity/brain/52a35f01-f539-4782-bd89-fda8c6618cc1/app_home_mockup_1776057018334.png"
+                 class="absolute w-[200px] md:w-[220px] rounded-[30px] border-[4px] border-[#2a2a35] shadow-2xl rotate-[15deg] translate-x-[100px] md:translate-x-[120px] translate-y-8 opacity-70 hover:z-30 hover:opacity-100 hover:rotate-6 hover:scale-110 hover:-translate-y-4 transition-all duration-500 cursor-pointer">
+
+            <!-- Center Screen (Boarding Pass) -->
+            <img src="file:///C:/Users/HP_ProOne_440_User/.gemini/antigravity/brain/52a35f01-f539-4782-bd89-fda8c6618cc1/app_boarding_mockup_1776057093383.png"
+                 class="relative z-20 w-[240px] md:w-[280px] rounded-[35px] shadow-[0_40px_80px_rgba(0,0,0,0.8)] border-[6px] border-[#1c1c24] hover:scale-105 hover:-translate-y-6 transition-all duration-500 cursor-pointer">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 9: News -->
+  <section class="py-32 bg-slate-50">
+    <div class="container mx-auto px-6">
+      <div class="flex justify-between items-end mb-20" data-reveal>
+        <div>
+          <span class="text-[--burgundy] font-black uppercase tracking-[0.4em] text-sm block mb-4 news-tag">المركز
+            الإعلامي</span>
+          <h2 class="text-5xl font-black text-slate-900 news-title">آخر الأخبار والتحديثات</h2>
+        </div>
+        <button class="text-[--burgundy] font-black border-b-2 border-[--burgundy] pb-1 news-btn">شاهد الكل</button>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div class="bg-white rounded-[32px] overflow-hidden shadow-sm hover:shadow-xl transition" data-reveal>
+          <img src="https://images.unsplash.com/photo-1540339832862-4745299807c3?q=80&w=800"
+            class="h-64 w-full object-cover">
+          <div class="p-10 text-start">
+            <span class="text-[10px] font-black text-slate-400 block mb-4">12 مايو 2024</span>
+            <h3 class="text-xl font-black mb-4 n1-t">افتتاح خط طيران مباشر إلى مدريد</h3>
+            <p class="text-slate-500 text-sm n1-p">ضمن خطتنا التوسعية، نعلن عن بدء تسيير رحلاتنا المباشرة من طرابلس إلى
+              مدريد بمعدل 3 رحلات أسبوعياً.</p>
+          </div>
+        </div>
+        <!-- News 2 -->
+        <div class="bg-white rounded-[32px] overflow-hidden shadow-sm hover:shadow-xl transition" data-reveal>
+          <img src="https://images.unsplash.com/photo-1569154941061-e231b4725ef1?q=80&w=800"
+            class="h-64 w-full object-cover">
+          <div class="p-10 text-start">
+            <span class="text-[10px] font-black text-slate-400 block mb-4">08 مايو 2024</span>
+            <h3 class="text-xl font-black mb-4 n2-t">تحديث أسطول الرحلات الجوية</h3>
+            <p class="text-slate-500 text-sm n2-p">انضمام طائرتين جديدتين من طراز Airbus A330 لأسطول الشركة لتعزيز
+              الراحة في الرحلات الطويلة.</p>
+          </div>
+        </div>
+        <!-- News 3 -->
+        <div class="bg-white rounded-[32px] overflow-hidden shadow-sm hover:shadow-xl transition" data-reveal>
+          <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=800"
+            class="h-64 w-full object-cover">
+          <div class="p-10 text-start">
+            <span class="text-[10px] font-black text-slate-400 block mb-4">01 مايو 2024</span>
+            <h3 class="text-xl font-black mb-4 n3-t">تطبيق إجراءات سفر ذكية جديدة</h3>
+            <p class="text-slate-500 text-sm n3-p">إطلاق خدمة إنهاء إجراءات السفر ذاتياً في مطار معيتيقة الدولي لتوفير
+              الوقت.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Integrated Newsletter & Premium Footer -->
+  <footer class="bg-[#0a0410] text-white pt-24 pb-16 border-t font-outfit relative overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(138,21,56,0.05),transparent)] pointer-events-none"></div>
+    <!-- Inline Newsletter Section -->
+    <div class="container mx-auto px-6 mb-20 pb-20 border-b border-white/10" data-reveal>
+      <div class="flex flex-col lg:flex-row justify-between items-center gap-10">
+        <div class="lg:w-1/2 text-start">
+          <h2 class="text-3xl md:text-4xl font-black mb-4 mail-title">اشترك في نشرتنا البريدية</h2>
+          <p class="text-white/60 text-lg mail-p font-light">كن أول من يعرف عن عروضنا الحصرية والوجهات الجديدة المضافة عبر بريدك.</p>
+        </div>
+        <div class="lg:w-1/2 w-full flex">
+          <div class="flex w-full bg-white/5 border border-white/10 rounded-full p-2 focus-within:border-white/30 transition shadow-inner">
+            <input type="email" placeholder="بريدك الإلكتروني"
+              class="flex-1 bg-transparent border-none px-6 py-4 text-white placeholder-white/40 focus:outline-none text-lg">
+            <button class="bg-[--burgundy] text-white font-bold py-4 px-10 rounded-full hover:bg-white hover:text-black transition duration-300 mail-btn shadow-md">اشترك الآن</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Links -->
+    <div class="container mx-auto px-6 relative z-10">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20 text-start">
+        <div>
+          <img src="https://libyanairlines.aero/wp-content/uploads/2020/07/airlines-logo.svg" alt="Logo"
+            class="h-16 w-auto mb-8 filter brightness-0 invert transition-all duration-700 hover:scale-105">
+          <p class="text-white/60 leading-relaxed mb-8 f-desc font-light">الناقل الوطني لدولة ليبيا وعضو الاتحاد العربي للنقل
+            الجوي، نلتزم بتقديم تجربة سفر آمنة ومميزة تلبي تطلعات ضيوفنا.</p>
+          <div class="flex gap-4 justify-start">
+            <a href="#"
+              class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-[--burgundy] hover:text-white transition duration-300 text-white/70"><i
+                data-lucide="facebook" class="w-5 h-5"></i></a>
+            <a href="#"
+              class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-[--burgundy] hover:text-white transition duration-300 text-white/70"><i
+                data-lucide="twitter" class="w-5 h-5"></i></a>
+            <a href="#"
+              class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-[--burgundy] hover:text-white transition duration-300 text-white/70"><i
+                data-lucide="instagram" class="w-5 h-5"></i></a>
+          </div>
+        </div>
+        <div>
+          <h4 class="text-xl font-black mb-8 f-links-t text-white border-b border-white/10 pb-4 inline-block">روابط سريعة</h4>
+          <ul class="space-y-4 text-white/60 font-light">
+            <li><a href="#" class="hover:text-[--burgundy] hover:translate-x-2 transition-all duration-300 inline-block l1">الأسئلة الشائعة</a></li>
+            <li><a href="#" class="hover:text-[--burgundy] hover:translate-x-2 transition-all duration-300 inline-block l2">سياسة الوزن</a></li>
+            <li><a href="#" class="hover:text-[--burgundy] hover:translate-x-2 transition-all duration-300 inline-block l3">حالة الرحلة</a></li>
+            <li><a href="#" class="hover:text-[--burgundy] hover:translate-x-2 transition-all duration-300 inline-block l4">عضوية التميز</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-xl font-black mb-8 f-support-t text-white border-b border-white/10 pb-4 inline-block">الدعم</h4>
+          <ul class="space-y-4 text-white/60 font-light">
+            <li><a href="#" class="hover:text-[--burgundy] hover:translate-x-2 transition-all duration-300 inline-block s1">مكاتبنا</a></li>
+            <li><a href="#" class="hover:text-[--burgundy] hover:translate-x-2 transition-all duration-300 inline-block s2">مركز المساعدة</a></li>
+            <li><a href="#" class="hover:text-[--burgundy] hover:translate-x-2 transition-all duration-300 inline-block s3">اتصل بنا</a></li>
+            <li><a href="#" class="hover:text-[--burgundy] hover:translate-x-2 transition-all duration-300 inline-block s4">الشكاوى والاقتراحات</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-xl font-black mb-8 f-legal-t text-white border-b border-white/10 pb-4 inline-block">قانوني</h4>
+          <ul class="space-y-4 text-white/60 font-light">
+            <li><a href="#" class="hover:text-[--burgundy] hover:translate-x-2 transition-all duration-300 inline-block g1">شروط النقل</a></li>
+            <li><a href="#" class="hover:text-[--burgundy] hover:translate-x-2 transition-all duration-300 inline-block g2">سياسة الخصوصية</a></li>
+            <li><a href="#" class="hover:text-[--burgundy] hover:translate-x-2 transition-all duration-300 inline-block g3">شروط الاستخدام</a></li>
+            <li><a href="#" class="hover:text-[--burgundy] hover:translate-x-2 transition-all duration-300 inline-block g4">ملفات تعريف الارتباط</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-white/10 pt-10 text-center text-white/40 text-sm tracking-widest footer-copy-bottom">
+        © 2024 الخطوط الجوية الليبية. جميع الحقوق محفوظة. تم التطوير بلمسة فنية فاخرة.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+
+    let lastScrollY = window.scrollY;
+    const navbar = document.getElementById('navbar');
+    
+    window.addEventListener('scroll', () => {
+      const currentY = window.scrollY;
+      // Always show navbar at top of page
+      if (currentY < 100) {
+        navbar.classList.remove('nav-hidden');
+      } else if (currentY > lastScrollY && currentY > 300) {
+        // Scrolling down → hide
+        navbar.classList.add('nav-hidden');
+      } else if (currentY < lastScrollY) {
+        // Scrolling up → show
+        navbar.classList.remove('nav-hidden');
+      }
+      lastScrollY = currentY;
+    });
+    
+    // Make sure navbar is visible on page load
+    window.dispatchEvent(new Event('scroll'));
+
+    /* --- Logic for Both Sliders --- */
+    function setupSlider(id, btnPrefix) {
+      const slider = document.getElementById(id);
+      const originalCards = Array.from(slider.children);
+      for (let i = 0; i < 3; i++) {
+        originalCards.forEach(card => slider.appendChild(card.cloneNode(true)));
+      }
+      return { slider, originalCards, pos: originalCards.length };
+    }
+
+    const popData = setupSlider('pop-slider');
+
+    function updateSliderPosition(data, animate = true) {
+      const isRTL = document.getElementById('main-html').getAttribute('dir') === 'rtl';
+      const multiplier = isRTL ? 1 : -1;
+      const card = data.slider.firstElementChild;
+      const width = card.offsetWidth + 20;
+      data.slider.style.transition = animate ? 'transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1)' : 'none';
+      data.slider.style.transform = `translateX(${data.pos * width * multiplier}px)`;
+    }
+
+    function moveSlider(data, dir) {
+      data.pos += dir;
+      updateSliderPosition(data);
+      if (data.pos >= data.originalCards.length * 2 || data.pos <= 0) {
+        setTimeout(() => { data.pos = data.originalCards.length; updateSliderPosition(data, false); }, 800);
+      }
+    }
+
+    // Exported for HTML onclick
+    window.movePopSlider = (dir) => {
+      clearInterval(popTimer);
+      moveSlider(popData, dir);
+      popTimer = setInterval(() => moveSlider(popData, 1), 5000);
+    };
+
+    window.addEventListener('resize', () => {
+      popData.pos = popData.originalCards.length; 
+      updateSliderPosition(popData, false);
+    });
+
+    updateSliderPosition(popData, false);
+    let popTimer = setInterval(() => moveSlider(popData, 1), 5000);
+
+    // Tab Switching Logic
+    const tabs = document.querySelectorAll('.qa-tab');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        
+        const type = tab.classList.contains('tab-book') ? 'book' : 
+                     tab.classList.contains('tab-manage') ? 'manage' : 'status';
+        
+        document.querySelectorAll('.ticket-box').forEach(box => box.classList.add('hidden'));
+        document.querySelectorAll(`.box-${type}`).forEach(box => box.classList.remove('hidden'));
+        
+        // Hide trip type selector if not in 'Book' tab
+        const tripSelector = document.querySelector('.trip-type-container');
+        if (tripSelector) {
+          if (type === 'book') tripSelector.classList.remove('hidden');
+          else tripSelector.classList.add('hidden');
+        }
+      });
+    });
+
+    /* --- Trip Type & Date Picker Logic --- */
+    let fp;
+    function initFlatpickr(mode = 'range') {
+      if (fp) fp.destroy();
+      fp = flatpickr("#flatpickr-input", {
+        mode: mode,
+        dateFormat: "Y-m-d",
+        minDate: "today",
+        locale: document.getElementById('main-html').getAttribute('lang') === 'ar' ? 'ar' : 'en',
+        onChange: function(selectedDates, dateStr, instance) {
+          if (selectedDates.length > 0) {
+            document.getElementById('date-from').value = instance.formatDate(selectedDates[0], "d M");
+            if (selectedDates.length > 1) {
+              document.getElementById('date-to').value = instance.formatDate(selectedDates[1], "d M");
+            } else {
+              document.getElementById('date-to').value = "";
+            }
+          }
+        }
+      });
+    }
+
+    window.setTripType = function(type) {
+      const btns = document.querySelectorAll('.trip-radio input');
+      // Logic handled via radio grouping automatically, but we need UI updates
+      const wrapper = document.getElementById('date-box-wrapper');
+      const separator = document.getElementById('date-separator');
+      const returnBox = document.getElementById('return-box');
+
+      if (type === 'round') {
+        wrapper.classList.add('split');
+        separator.classList.remove('hidden');
+        returnBox.classList.remove('hidden');
+        initFlatpickr('range');
+      } else {
+        wrapper.classList.remove('split');
+        separator.classList.add('hidden');
+        returnBox.classList.add('hidden');
+        initFlatpickr('single');
+      }
+    };
+
+    // Initialize on load
+    document.addEventListener('DOMContentLoaded', () => {
+      initFlatpickr('range');
+    });
+
+    const translations = {
+      ar: {
+        htmlDir: 'rtl', langText: 'EN',
+        navHome: 'الرئيسية',
+        navAirlines: 'الخطوط الليبية', navAbout: 'عن الشركة', navNewsL: 'الأخبار', navLibya: 'عن ليبيا',
+        navOffices: 'المكاتب', navOffDomestic: 'المكاتب المحلية', navOffWorld: 'المكاتب العالمية',
+        navSchedule: 'جدول الرحلات', navSchDomestic: 'رحلات محلية', navSchIntl: 'رحلات دولية',
+        navPrices: 'الأسعار', navPDomestic: 'محلي', navPMitiga: 'من معيتيقة', navPBenghazi: 'من بنغازي', navPSabha: 'من سبها', navPGhat: 'من غات',
+        navPIntl: 'دولي', navPIMitiga: 'من معيتيقة', navPIBenghazi: 'من بنغازي', navPIMisrata: 'من مصراتة',
+        navContact: 'اتصل بنا', navCargo: 'عمليات الشحن', navAgencyIn: 'وكالات داخلية', navAgencyEx: 'وكالات خارجية',
+        heroTitle: 'تجاوز التوقعات', heroSub: 'انطلق في رحلة لا تُنسى مع الخطوط الجوية الليبية، حيث تلتقي الأصالة الليبية بمعايير الفخامة العالمية.', heroCta: 'استكشف العالم الآن',
+        tabBook: 'حجز رحلة', tabManage: 'إدارة الحجز', tabStatus: 'حالة رحلة',
+        navLogin: 'تسجيل الدخول',
+        tripRound: 'ذهاب وعودة', tripOne: 'ذهاب فقط', tripMulti: 'وجهات متعددة',
+        lblFrom: 'من أين', lblTo: 'إلى أين', lblDate: 'موعد السفر', lblPass: 'المسافرون',
+        lblDep: 'المغادرة', lblRet: 'العودة',
+        lblRef: 'رقم الحجز', lblLastName: 'اسم العائلة', lblFlightNo: 'رقم الرحلة',
+        placeholderRef: 'مثلاً: ABC123', placeholderLastName: 'الكنية', placeholderFlight: 'مثلاً: LN123',
+        dateReturnPlaceholder: 'تاريخ العودة', dateToday: 'اليوم',
+        btnSearch: 'بحث',
+        popTag: 'أشهر الوجهات', popTitle: 'وجهات مميزة في انتظارك', startTxt: 'ابتداءً من',
+        bookNow: 'احجز الآن',
+        d1n: 'إسطنبول', d1c: 'تركيا', d1desc: 'اكتشف سحر التاريخ والجمال',
+        d2n: 'دبي', d2c: 'الإمارات', d2desc: 'عالم من الرفاهية والتسوق',
+        d3n: 'القاهرة', d3c: 'مصر', d3desc: 'مهد الحضارة والتراث العريق',
+        d4n: 'لندن', d4c: 'المملكة المتحدة', d4desc: 'عاصمة الضباب والرقي',
+        d5n: 'تونس', d5c: 'تونس', d5desc: 'جمال المتوسط وكرم الضيافة',
+        d6n: 'عمان', d6c: 'الأردن', d6desc: 'مدينة الأصالة والطبيعة الخلابة',
+        dealsTag: 'العروض الحصرية', dealsTitle: 'اكتشف أفضل صفقات الطيران',
+        exclusiveBadge: 'عرض حصري',
+        bBadge: 'درجة رجال الأعمال', bTitle: 'رفاهية لا تضاهى في عنان السماء', bDesc: 'استمتع بتجربة سفر فاخرة صُممت خصيصاً لتلبي تطلعاتك. مقاعد جلدية وثيرة، خصوصية تامة، وأجواء هادئة تضمن لك الراحة طوال الرحلة.', bBtn: 'ترقية رحلتي',
+        offMainT: 'خصم 30% على رحلات الصيف', offMainBtn: 'احجز الآن',
+        osT: 'عروض الطلاب', osP: 'خصم حتى 25% وأمتعة إضافية مجاناً.',
+        ofT: 'عروض العائلات', ofP: 'خصم 20% ومقاعد مجانية.',
+        obT: 'رجال الأعمال', obP: 'ترقيات مجانية ودخول VIP.',
+        oeT: 'الحجز المبكر', oeP: 'وفر 25% عند الحجز مسبقاً.',
+        olT: 'اللحظة الأخيرة', olP: 'رحلات الغد بنصف السعر!',
+        omT: 'عروض المواسم', omP: 'عروض الصيف، رمضان والأعياد.',
+        onT: 'الوجهات الجديدة', onP: 'إسطنبول بـ 199$ فقط.',
+        owT: 'برنامج الولاء', owP: 'اجمع النقاط واستبدلها بتذاكر.',
+        exploreBtn: 'استكشف العرض',
+        servTag: 'تجربة السفر', servTitle: 'خدمات عالمية متفردة',
+        s1t: 'أمتعة مجانية', s1p: 'استمتع بوزن إضافي مجاني على جميع رحلاتنا الدولية.',
+        s2t: 'وجبات فاخرة', s2p: 'قائمة طعام متنوعة مستوحاة من المطبخ الليبي والعالمي.',
+        s3t: 'واي فاي مجاني', s3p: 'ابق على اتصال مع العالم حتى وأنت في عنان السماء.',
+        s4t: 'اختيار المقاعد', s4p: 'اختر مقعدك المفضل مسبقاً لضمان أقصى درجات الراحة.',
+        appTag: 'التطبيق المحمول', appTitle: 'رحلتك القادمة في جيبك', appP: 'حمل تطبيق الخطوط الجوية الليبية الآن واستمتع بتجربة حجز سريعة وسهلة، وتابع حالة رحلتك لحظة بلحظة.',
+        newsTag: 'المركز الإعلامي', newsTitle: 'آخر الأخبار والتحديثات', newsBtn: 'شاهد الكل',
+        n1t: 'افتتاح خط طيران مباشر إلى مدريد', n1p: 'نعلن عن بدء تسيير رحلاتنا المباشرة من طرابلس إلى مدريد بمعدل 3 رحلات أسبوعياً.',
+        n2t: 'تحديث أسطول الرحلات الجوية', n2p: 'انضمام طائرتين جديدتين من طراز Airbus A330 لأسطول الشركة لتعزيز الراحة.',
+        n3t: 'تطوير إجراءات سفر ذكية', n3p: 'إطلاق خدمة إنهاء إجراءات السفر ذاتياً في مطار معيتيقة الدولي لتوفير الوقت.',
+        mailTitle: 'اشترك في نشرتنا البريدية', mailP: 'كن أول من يعرف عن عروضنا الحصرية والوجهات الجديدة المضافة.', mailBtn: 'اشترك الآن',
+        fDesc: 'الناقل الوطني لدولة ليبيا وعضو الاتحاد العربي للنقل الجوي، نلتزم بتقديم تجربة سفر آمنة ومميزة.',
+        fLinksT: 'روابط سريعة', fSupportT: 'الدعم', fLegalT: 'قانوني',
+        l1: 'الأسئلة الشائعة', l2: 'سياسة الوزن', l3: 'حالة الرحلة', l4: 'عضوية التميز',
+        s1: 'مكاتبنا', s2: 'مركز المساعدة', s3: 'اتصل بنا', s4: 'الشكاوى والاقتراحات',
+        g1: 'شروط النقل', g2: 'سياسة الخصوصية', g3: 'شروط الاستخدام', g4: 'ملفات تعريف الارتباط',
+        footerCopy: '© 2024 الخطوط الجوية الليبية. جميع الحقوق محفوظة. تم التطوير بلمسة فنية فاخرة.'
+      },
+      en: {
+        htmlDir: 'ltr', langText: 'AR',
+        navHome: 'Home',
+        navAirlines: 'Libyan Airlines', navAbout: 'About us', navNewsL: 'News', navLibya: 'About Libya',
+        navOffices: 'OFFICES', navOffDomestic: 'Domestic Offices', navOffWorld: 'Worldwide Offices',
+        navSchedule: 'Flight Schedule', navSchDomestic: 'Domestic Flights', navSchIntl: 'International Flights',
+        navPrices: 'Prices', navPDomestic: 'DOMESTIC', navPMitiga: 'from Mitiga', navPBenghazi: 'from Benghazi', navPSabha: 'from Sabha', navPGhat: 'from Chat',
+        navPIntl: 'INTERNATIONAL', navPIMitiga: 'from Mitiga', navPIBenghazi: 'from Benghazi', navPIMisrata: 'from Misrata',
+        navContact: 'Contact Us', navCargo: 'Cargo Operation', navAgencyIn: 'Internal Agencies', navAgencyEx: 'External Agencies',
+        heroTitle: 'BEYOND EXPECTATIONS', heroSub: 'Embark on an unforgettable journey with Libyan Airlines, where Libyan authenticity meets global luxury standards.', heroCta: 'Explore the World',
+        tabBook: 'Book a Flight', tabManage: 'Manage Booking', tabStatus: 'Flight Status',
+        navLogin: 'Log In',
+        tripRound: 'Round Trip', tripOne: 'One Way', tripMulti: 'Multi-city',
+        lblFrom: 'From', lblTo: 'To', lblDate: 'Date', lblPass: 'Passengers',
+        lblDep: 'Departure', lblRet: 'Return',
+        lblRef: 'Booking Reference', lblLastName: 'Last Name', lblFlightNo: 'Flight Number',
+        placeholderRef: 'e.g. ABC123', placeholderLastName: 'Family Name', placeholderFlight: 'e.g. LN123',
+        dateReturnPlaceholder: 'Return Date', dateToday: 'Today',
+        btnSearch: 'Search',
+        popTag: 'POPULAR DESTINATIONS', popTitle: 'Stunning Destinations Await', startTxt: 'From',
+        bookNow: 'Book Now',
+        d1n: 'Istanbul', d1c: 'Turkey', d1desc: 'Discover history and beauty',
+        d2n: 'Dubai', d2c: 'UAE', d2desc: 'World of luxury and shopping',
+        d3n: 'Cairo', d3c: 'Egypt', d3desc: 'Cradle of civilization',
+        d4n: 'London', d4c: 'UK', d4desc: 'Capital of fog and elegance',
+        d5n: 'Tunis', d5c: 'Tunisia', d5desc: 'Mediterranean beauty',
+        d6n: 'Amman', d6c: 'Jordan', d6desc: 'Heritage and stunning nature',
+        dealsTag: 'EXCLUSIVE OFFERS', dealsTitle: 'Discover Best Flight Deals',
+        exclusiveBadge: 'Exclusive Offer',
+        bBadge: 'Business Class', bTitle: 'Unmatched Luxury in the Skies', bDesc: 'Experience a luxurious travel journey designed to meet your expectations. Plush leather seats and private atmosphere.', bBtn: 'Upgrade My Trip',
+        offMainT: '30% Off Summer Flights', offMainBtn: 'Book Now',
+        osT: 'Student Offers', osP: '25% Off + Extra Baggage.',
+        ofT: 'Family Offers', ofP: '20% off and free seats.',
+        obT: 'Business Offers', obP: 'Free upgrades & VIP access.',
+        oeT: 'Early Bird', oeP: 'Save 25% with advance bookings.',
+        olT: 'Last Minute', olP: 'Tomorrow flights at half price!',
+        omT: 'Seasonal Deals', omP: 'Summer & Ramadan offers.',
+        onT: 'New Routes', onP: 'Istanbul for just $199.',
+        owT: 'Loyalty Program', owP: 'Earn points for free tickets.',
+        exploreBtn: 'Explore Offer',
+        servTag: 'TRAVEL EXPERIENCE', servTitle: 'Distinguished Global Services',
+        s1t: 'Free Baggage', s1p: 'Enjoy extra free weight on all our international flights.',
+        s2t: 'Luxury Meals', s2p: 'A diverse menu inspired by Libyan and international cuisine.',
+        s3t: 'Free Wi-Fi', s3p: 'Stay connected with the world even while you are in the sky.',
+        s4t: 'Seat Selection', s4p: 'Choose your favorite seat in advance for maximum comfort.',
+        appTag: 'MOBILE APP', appTitle: 'Your Next Trip In Your Pocket', appP: 'Download the Libyan Airlines app now for a fast booking experience and real-time flight tracking.',
+        newsTag: 'MEDIA CENTER', newsTitle: 'Latest News & Updates', newsBtn: 'View All',
+        n1t: 'Direct Flight to Madrid Launched', n1p: 'We are launching direct flights from Tripoli to Madrid with 3 weekly flights.',
+        n2t: 'Fleet Upgrade', n2p: 'Two new Airbus A330 aircraft joined our fleet to enhance long-haul comfort.',
+        n3t: 'Smart Travel Procedures', n3p: 'Self-checking service launched at Mitiga International Airport to save time.',
+        mailTitle: 'Subscribe to Newsletter', mailP: 'Be the first to know about our exclusive offers and new destinations.', mailBtn: 'Subscribe Now',
+        fDesc: 'The national carrier of Libya and member of AACO, committed to a safe and distinguished travel experience.',
+        fLinksT: 'Quick Links', fSupportT: 'Support', fLegalT: 'Legal',
+        l1: 'FAQs', l2: 'Baggage Policy', l3: 'Flight Status', l4: 'Excellence Club',
+        s1: 'Our Offices', s2: 'Help Center', s3: 'Contact Us', s4: 'Complaints & Suggestions',
+        g1: 'Conditions of Carriage', g2: 'Privacy Policy', g3: 'Terms of Use', g4: 'Cookie Policy',
+        footerCopy: '© 2024 Libyan Airlines. All Rights Reserved. Crafted with a luxury touch.'
+      }
+    };
+
+    function applyLanguage(lang) {
+      const t = translations[lang];
+      const root = document.getElementById('main-html');
+      if (!root) return;
+
+      root.setAttribute('lang', lang);
+      root.setAttribute('dir', t.htmlDir);
+      
+      const langTextEl = document.getElementById('lang-text');
+      if (langTextEl) langTextEl.innerText = t.langText;
+
+      const updateAll = (cls, txt) => document.querySelectorAll(cls).forEach(el => el.innerText = txt);
+      const updateOne = (cls, txt) => {
+        const el = document.querySelector(cls);
+        if (el) el.innerText = txt;
+      };
+      const updateHtml = (id, html) => {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = html;
+      };
+      const updateIdText = (id, txt) => {
+        const el = document.getElementById(id);
+        if (el) el.innerText = txt;
+      };
+
+      // Update Navigation Spans
+      const setNavText = (cls, txt) => {
+        document.querySelectorAll(cls).forEach(el => {
+          if (el.tagName === 'SPAN') el.innerText = txt;
+          else if (el.classList.contains('dropdown-item')) el.innerText = txt;
+        });
+      };
+
+      setNavText('.nav-home', t.navHome);
+      setNavText('.nav-airlines', t.navAirlines);
+      setNavText('.nav-about', t.navAbout);
+      setNavText('.nav-news-link', t.navNewsL);
+      setNavText('.nav-libya', t.navLibya);
+      setNavText('.nav-offices', t.navOffices);
+      setNavText('.nav-off-domestic', t.navOffDomestic);
+      setNavText('.nav-off-world', t.navOffWorld);
+      setNavText('.nav-schedule', t.navSchedule);
+      setNavText('.nav-sch-domestic', t.navSchDomestic);
+      setNavText('.nav-sch-intl', t.navSchIntl);
+      setNavText('.nav-prices', t.navPrices);
+      setNavText('.nav-p-domestic', t.navPDomestic);
+      setNavText('.nav-p-mitiga', t.navPMitiga);
+      setNavText('.nav-p-benghazi', t.navPBenghazi);
+      setNavText('.nav-p-sabha', t.navPSabha);
+      setNavText('.nav-p-ghat', t.navPGhat);
+      setNavText('.nav-p-intl', t.navPIntl);
+      setNavText('.nav-p-i-mitiga', t.navPIMitiga);
+      setNavText('.nav-p-i-benghazi', t.navPIBenghazi);
+      setNavText('.nav-p-i-misrata', t.navPIMisrata);
+      setNavText('.nav-contact', t.navContact);
+      setNavText('.nav-cargo', t.navCargo);
+      setNavText('.nav-agency-in', t.navAgencyIn);
+      setNavText('.nav-agency-ex', t.navAgencyEx);
+      setNavText('.nav-login', t.navLogin);
+
+      updateHtml('hero-main-title', t.heroTitle);
+      updateIdText('hero-sub-title', t.heroSub);
+      updateIdText('hero-cta', t.heroCta);
+
+      updateOne('.tab-book', t.tabBook);
+      updateOne('.tab-manage', t.tabManage);
+      updateOne('.tab-status', t.tabStatus);
+      updateOne('.lbl-from', t.lblFrom);
+      updateOne('.lbl-to', t.lblTo);
+      updateOne('.lbl-date', t.lblDate);
+      updateOne('.lbl-pass', t.lblPass);
+      updateOne('.lbl-ref', t.lblRef);
+      updateOne('.lbl-last-name', t.lblLastName);
+      updateOne('.lbl-flight-no', t.lblFlightNo);
+      updateOne('.lbl-dep', t.lblDep);
+      updateOne('.lbl-ret', t.lblRet);
+
+      const tripLabels = document.querySelectorAll('.trip-type-label');
+      if (tripLabels.length >= 3) {
+        tripLabels[0].innerText = t.tripRound;
+        tripLabels[1].innerText = t.tripOne;
+        tripLabels[2].innerText = t.tripMulti;
+      }
+      
+      const inpRef = document.querySelector('.inp-ref');
+      if (inpRef) inpRef.placeholder = t.placeholderRef;
+      const inpLast = document.querySelector('.inp-last');
+      if (inpLast) inpLast.placeholder = t.placeholderLastName;
+      const inpFlight = document.querySelector('.inp-flight');
+      if (inpFlight) inpFlight.placeholder = t.placeholderFlight;
+      const inpRet = document.getElementById('date-to');
+      if (inpRet) inpRet.placeholder = t.dateReturnPlaceholder;
+
+      updateOne('.btn-search', t.btnSearch);
+
+      updateOne('.pop-tag', t.popTag);
+      updateOne('.pop-title', t.popTitle);
+      updateAll('.start-txt', t.startTxt);
+      updateAll('.book-now-btn', t.bookNow);
+      
+      updateAll('.d1-n', t.d1n); updateAll('.d1-c', t.d1c);
+      updateAll('.d2-n', t.d2n); updateAll('.d2-c', t.d2c);
+      updateAll('.d3-n', t.d3n); updateAll('.d3-c', t.d3c);
+      updateAll('.d4-n', t.d4n); updateAll('.d4-c', t.d4c);
+      updateAll('.d5-n', t.d5n); updateAll('.d5-c', t.d5c);
+      updateAll('.d6-n', t.d6n); updateAll('.d6-c', t.d6c);
+      
+      updateOne('.d1-desc', t.d1desc); updateOne('.d2-desc', t.d2desc);
+      updateOne('.d3-desc', t.d3desc); updateOne('.d4-desc', t.d4desc);
+      updateOne('.d5-desc', t.d5desc); updateOne('.d6-desc', t.d6desc);
+
+      updateOne('.deals-tag', t.dealsTag);
+      updateOne('.deals-title', t.dealsTitle);
+      updateAll('.os-badge', t.exclusiveBadge);
+      updateOne('.b-badge', t.bBadge);
+      updateOne('.b-title', t.bTitle);
+      updateOne('.b-desc', t.bDesc);
+      updateOne('.b-btn', t.bBtn);
+      
+      updateOne('.os-t', t.osT); updateAll('.os-p', t.osP);
+      updateOne('.of-t', t.ofT); updateOne('.of-p', t.ofP);
+      updateOne('.ob-t', t.obT); updateOne('.ob-p', t.obP);
+      updateOne('.oe-t', t.oeT); updateOne('.oe-p', t.oeP);
+      updateOne('.ol-t', t.olT); updateOne('.ol-p', t.olP);
+      updateOne('.om-t', t.omT); updateOne('.om-p', t.omP);
+      updateOne('.on-t', t.onT); updateOne('.on-p', t.onP);
+      updateOne('.ow-t', t.owT); updateOne('.ow-p', t.owP);
+      updateAll('.explore-btn', t.exploreBtn);
+
+      updateOne('.serv-tag', t.servTag);
+      updateOne('.serv-title', t.servTitle);
+      updateOne('.s1-t', t.s1t); updateOne('.s1-p', t.s1p);
+      updateOne('.s2-t', t.s2t); updateOne('.s2-p', t.s2p);
+      updateOne('.s3-t', t.s3t); updateOne('.s3-p', t.s3p);
+      updateOne('.s4-t', t.s4t); updateOne('.s4-p', t.s4p);
+      
+      updateOne('.app-tag', t.appTag);
+      updateOne('.app-title', t.appTitle);
+      updateOne('.app-p', t.appP);
+      
+      updateOne('.news-tag', t.newsTag);
+      updateOne('.news-title', t.newsTitle);
+      updateOne('.news-btn', t.newsBtn);
+      updateOne('.n1-t', t.n1t); updateOne('.n1-p', t.n1p);
+      updateOne('.n2-t', t.n2t); updateOne('.n2-p', t.n2p);
+      updateOne('.n3-t', t.n3t); updateOne('.n3-p', t.n3p);
+      
+      updateOne('.mail-title', t.mailTitle);
+      updateOne('.mail-p', t.mailP);
+      updateOne('.mail-btn', t.mailBtn);
+      
+      updateOne('.f-desc', t.fDesc);
+      updateOne('.f-links-t', t.fLinksT);
+      updateOne('.f-support-t', t.fSupportT);
+      updateOne('.f-legal-t', t.fLegalT);
+      
+      updateOne('.l1', t.l1); updateOne('.l2', t.l2); updateOne('.l3', t.l3); updateOne('.l4', t.l4);
+      updateOne('.s1', t.s1); updateOne('.s2', t.s2); updateOne('.s3', t.s3); updateOne('.s4', t.s4);
+      updateOne('.g1', t.g1); updateOne('.g2', t.g2); updateOne('.g3', t.g3); updateOne('.g4', t.g4);
+      
+      updateOne('.footer-copy-bottom', t.footerCopy);
+
+      if (window.popData) {
+        popData.pos = popData.originalCards.length; 
+        updateSliderPosition(popData, false);
+      }
+      
+      localStorage.setItem('libyanAirlines_lang', lang);
+    }
+
+    function toggleLanguage() {
+      const currentLang = document.getElementById('main-html').getAttribute('lang') === 'ar' ? 'en' : 'ar';
+      applyLanguage(currentLang);
+    }
+
+    // Check for saved language on load
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedLang = localStorage.getItem('libyanAirlines_lang');
+      if (savedLang && savedLang !== 'ar') {
+        applyLanguage(savedLang);
+      } else {
+        applyLanguage('ar');
+      }
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
+  </script>
+</body>
+
+</html>
